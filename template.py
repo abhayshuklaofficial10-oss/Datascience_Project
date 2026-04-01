@@ -29,16 +29,21 @@ list_of_files=[
 ]
 
 for filepath in list_of_files:
-    filepath=Path(filepath)
-    filedir, filename=os.path.split(filepath)
-    
-    if filedir !="":
+
+    filepath = Path(filepath)
+
+    filedir, filename = os.path.split(filepath)
+
+    # Create directory if it exists
+    if filedir != "":
         os.makedirs(filedir, exist_ok=True)
-        logging.info(f"Creating directory: {filedir} for file: {filename}") 
-        
-        if (not os.path.exists(filepath)) or (os.path.getsize(filepath) == 0):
-            with open(filepath, "w") as f:
-                pass
-            logging.info(f"Creating file: {filename}")
-        else:
-            logging.info(f"File already exists: {filename}")    
+        logging.info(f"Creating directory: {filedir}")
+
+    # Always create file
+    if not os.path.exists(filepath):
+        with open(filepath, "w") as f:
+            pass
+        logging.info(f"Creating file: {filename}")
+
+    else:
+        logging.info(f"File already exists: {filename}")    
